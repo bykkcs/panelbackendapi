@@ -1,4 +1,4 @@
-import Fastify from 'fastify';
+import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import cors from '@fastify/cors';
 import jwt from '@fastify/jwt';
 import multipart from '@fastify/multipart';
@@ -36,10 +36,10 @@ await app.register(swagger, {
 });
 await app.register(swaggerUI, { routePrefix: '/docs' });
 
-app.decorate('authenticate', async (request, reply) => {
+app.decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
   try { await request.jwtVerify(); } catch (e) { return reply.status(401).send({ message: 'Unauthorized' }); }
 });
-app.decorate('rbac', (roles) => async (request, reply) => {
+app.decorate('rbac', (roles: string[]) => async (request: FastifyRequest, reply: FastifyReply) => {
   const user = request.user as any;
   if (!user || !roles.includes(user.role)) {
     return reply.status(403).send({ message: 'Forbidden' });
