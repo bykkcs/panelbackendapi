@@ -1,0 +1,32 @@
+{
+  "name": "appliance-crm-backend",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc && cp -r prisma dist/prisma",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate deploy",
+    "seed": "tsx src/seed.ts"
+  },
+  "dependencies": {
+    "@fastify/cors": "^10.0.0",
+    "@fastify/jwt": "^9.0.3",
+    "@fastify/multipart": "^8.3.0",
+    "@fastify/swagger": "^9.4.2",
+    "@fastify/swagger-ui": "^3.0.0",
+    "@prisma/client": "^5.17.0",
+    "bcryptjs": "^2.4.3",
+    "fastify": "^4.28.1",
+    "pino": "^9.2.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^24.2.1",
+    "prisma": "^5.17.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  }
+}

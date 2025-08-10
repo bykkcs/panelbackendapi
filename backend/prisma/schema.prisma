@@ -1,0 +1,139 @@
+// Prisma schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  CALL_CENTER
+  MASTER
+  ACCOUNTING
+}
+
+enum OrderStatus {
+  NEW
+  ASSIGNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELED
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  TRANSFER
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  phone        String   @unique
+  passwordHash String
+  role         Role
+  createdAt    DateTime @default(now())
+  orders       Order[]  @relation("AssignedOrders")
+  workLogs     WorkLog[]
+  attachments  Attachment[]
+  auditLogs    AuditLog[]
+}
+
+model Client {
+  id         String   @id @default(cuid())
+  name       String
+  phone      String   @unique
+  address    String
+  metro      String?
+  howToGet   String?
+  createdAt  DateTime @default(now())
+  orders     Order[]
+  @@index([phone])
+}
+
+model Order {
+  id             String       @id @default(cuid())
+  code           String       @unique
+  clientId       String
+  client         Client       @relation(fields: [clientId], references: [id])
+  applianceType  String
+  applianceAge   String?
+  problem        String
+  address        String
+  metro          String?
+  howToGet       String?
+  scheduledAt    DateTime?
+  status         OrderStatus  @default(NEW)
+  assignedToId   String?
+  assignedTo     User?        @relation("AssignedOrders", fields: [assignedToId], references: [id])
+  totalAmount    Decimal?     @db.Decimal(10,2)
+  paymentMethod  PaymentMethod?
+  comments       String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  workLogs       WorkLog[]
+  attachments    Attachment[]
+  payments       Payment[]
+  notifications  Notification[]
+  @@index([status, scheduledAt])
+  @@index([assignedToId])
+  @@index([code])
+}
+
+model WorkLog {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
+  masterId  String
+  master    User     @relation(fields: [masterId], references: [id])
+  action    String
+  comment   String?
+  createdAt DateTime @default(now())
+}
+
+model Attachment {
+  id         String   @id @default(cuid())
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id])
+  filename   String
+  mimeType   String
+  path       String
+  uploadedById String
+  uploadedBy User     @relation(fields: [uploadedById], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
+  amount    Decimal  @db.Decimal(10,2)
+  method    PaymentMethod
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  action    String
+  entity    String
+  entityId  String?
+  ip        String?
+  createdAt DateTime @default(now())
+  @@index([createdAt])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
+  channel   String   // e.g. 'sms', 'push'
+  payload   String
+  sentAt    DateTime?
+  status    String   // 'pending' | 'sent' | 'failed'
+  createdAt DateTime @default(now())
+}
