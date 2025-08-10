@@ -26,7 +26,7 @@ export async function uploadRoutes(app: FastifyInstance, opts: any) {
         });
         uploads.push({ filename: part.filename, stored: filename, mime: part.mimetype, path: filepath });
       } else if (part.type === 'field' && part.fieldname === 'orderId') {
-        orderId = part.value;
+        orderId = part.value as string;
       }
     }
 
