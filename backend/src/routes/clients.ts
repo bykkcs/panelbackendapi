@@ -18,6 +18,13 @@ export async function clientRoutes(app: FastifyInstance) {
     return clients;
   });
 
+  app.get('/check-phone', async (req, reply) => {
+    const phone = (req.query as any).phone as string;
+    if (!phone) return reply.code(400).send({ message: 'phone is required' });
+    const exists = await prisma.client.findFirst({ where: { phone } }).then(Boolean);
+    return { exists };
+  });
+
   app.post('/', async (req, reply) => {
     const schema = z.object({
       name: z.string().min(1),

@@ -66,7 +66,11 @@ export async function orderRoutes(app: FastifyInstance) {
       applianceType: z.string().min(1),
       applianceAge: z.string().optional(),
       problem: z.string().min(1),
-      scheduledAt: z.string().datetime().optional()
+      scheduledAt: z.preprocess((val) => {
+        if (typeof val !== 'string') return val;
+        const d = new Date(val);
+        return Number.isNaN(d.getTime()) ? undefined : d.toISOString();
+      }, z.string().datetime()).optional()
     });
     const data = schema.parse(req.body);
 

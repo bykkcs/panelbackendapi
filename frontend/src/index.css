@@ -2,4 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: light dark; }
+/* Force a light theme with high contrast for better readability */
+:root {
+  color-scheme: light;
+}
+
+/* Global body styles for consistent light background and text */
+body {
+  @apply bg-gray-50 text-gray-900;
+}
