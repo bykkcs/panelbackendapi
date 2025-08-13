@@ -4,9 +4,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 import { Login } from './pages/Login'
 import { Shell } from './pages/Shell'
-import { CallCenter } from './pages/CallCenter'
-import { Master } from './pages/Master'
+import { Orders } from './pages/Orders'
+import { Clients } from './pages/Clients'
+import { Masters } from './pages/Masters'
 import { Accounting } from './pages/Accounting'
+import { Reports } from './pages/Reports'
+import { Settings } from './pages/Settings'
+import { Master } from './pages/Master'
 import { useAuthStore } from './stores/auth'
 
 const router = createBrowserRouter([
@@ -15,9 +19,13 @@ const router = createBrowserRouter([
     path: '/app',
     element: <Shell/>,
     children: [
-      { path: 'call', element: <CallCenter/> },
-      { path: 'master', element: <Master/> },
-      { path: 'acc', element: <Accounting/> }
+      { path: 'orders', element: <Orders/> },
+      { path: 'clients', element: <Clients/> },
+      { path: 'masters', element: <Masters/> },
+      { path: 'accounting', element: <Accounting/> },
+      { path: 'reports', element: <Reports/> },
+      { path: 'settings', element: <Settings/> },
+      { path: 'master', element: <Master/> }
     ]
   }
 ])
