@@ -48,7 +48,7 @@ export function Master() {
                 <div className="font-mono">{o.code}</div>
                 <div className="text-sm">{o.client?.name} — {o.address}</div>
               </div>
-              <button className="bg-gray-800 text-white px-3 rounded" onClick={()=>openOrder(o.id)}>Открыть</button>
+              <button className="bg-blue-600 text-white px-3 rounded hover:bg-blue-700 transition" onClick={()=>openOrder(o.id)}>Открыть</button>
             </li>
           ))}
         </ul>
@@ -63,7 +63,7 @@ export function Master() {
             <div className="text-sm">Проблема: {selected.problem}</div>
             <div className="text-sm">Статус: {selected.status}</div>
             <div className="flex gap-2">
-              <button className="bg-blue-600 text-white px-3 py-1 rounded" onClick={()=>start(selected.id)}>Старт</button>
+              <button className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition" onClick={()=>start(selected.id)}>Старт</button>
             </div>
             <div className="border-t pt-2">
               <div className="font-semibold">Завершить заявку</div>
