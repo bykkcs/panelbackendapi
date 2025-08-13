@@ -17,9 +17,9 @@ export function Login() {
       const user = (await (await fetch((import.meta.env.VITE_API_URL || 'http://localhost:4000') + '/auth/me', {
         headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
       })).json()).user
-      if (user?.role === 'CALL_CENTER' || user?.role === 'ADMIN') nav('/app/call')
+      if (user?.role === 'CALL_CENTER' || user?.role === 'ADMIN') nav('/app/orders')
       else if (user?.role === 'MASTER') nav('/app/master')
-      else nav('/app/acc')
+      else nav('/app/accounting')
     } catch (e: any) {
       setErr(e?.response?.data?.message || 'Login failed')
     }
@@ -32,7 +32,7 @@ export function Login() {
         <input className="w-full border rounded-xl p-3" placeholder="Phone" value={phone} onChange={e=>setPhone(e.target.value)}/>
         <input className="w-full border rounded-xl p-3" placeholder="Password" type="password" value={password} onChange={e=>setPassword(e.target.value)}/>
         {err && <div className="text-sm text-red-600">{err}</div>}
-        <button className="w-full bg-black text-white rounded-xl p-3">Login</button>
+        <button className="w-full bg-blue-600 text-white rounded-xl p-3 hover:bg-blue-700 transition">Login</button>
       </form>
     </div>
   )

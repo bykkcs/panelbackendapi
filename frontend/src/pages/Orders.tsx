@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const api = axios.create({ baseURL: import.meta.env.VITE_API_URL || 'http://localhost:4000', headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }})
 
-export function CallCenter() {
+export function Orders() {
   const [orders, setOrders] = useState<any[]>([])
   const [masters, setMasters] = useState<any[]>([])
   const [form, setForm] = useState({
@@ -51,13 +51,13 @@ export function CallCenter() {
           <input className="border p-2 rounded col-span-2" placeholder="Описание проблемы" value={form.problem} onChange={e=>setForm({...form, problem:e.target.value})} />
           <input type="datetime-local" className="border p-2 rounded" value={form.scheduledAt} onChange={e=>setForm({...form, scheduledAt:e.target.value})} />
         </div>
-        <button className="bg-black text-white px-4 py-2 rounded">Создать</button>
+        <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Создать</button>
       </form>
 
       <div className="space-y-3">
         <div className="bg-white p-3 rounded-2xl shadow flex gap-2">
           <input className="border p-2 rounded w-full" placeholder="Поиск по коду, адресу, имени..." value={search} onChange={e=>setSearch(e.target.value)} />
-          <button onClick={load} className="bg-gray-800 text-white px-4 py-2 rounded">Искать</button>
+          <button onClick={load} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Искать</button>
         </div>
         <div className="bg-white p-2 rounded-2xl shadow">
           <table className="w-full text-sm">

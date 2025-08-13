@@ -27,7 +27,7 @@ export function Accounting() {
           <label className="text-xs block">По</label>
           <input type="date" className="border p-2 rounded" value={to} onChange={e=>setTo(e.target.value)} />
         </div>
-        <a className="bg-gray-800 text-white px-3 py-2 rounded" href={exportUrl} target="_blank">Экспорт CSV</a>
+        <a className="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700 transition" href={exportUrl} target="_blank">Экспорт CSV</a>
       </div>
       <table className="w-full text-sm">
         <thead><tr className="text-left"><th className="p-2">Код</th><th className="p-2">Клиент</th><th className="p-2">Адрес</th><th className="p-2">Описание</th><th className="p-2">Сумма</th><th className="p-2">Оплата</th></tr></thead>
