@@ -30,8 +30,10 @@ async function main() {
     }
   });
 
-  const o = await prisma.order.create({
-    data: {
+  await prisma.order.upsert({
+    where: { code: 'ORD-20250101-1234' },
+    update: {},
+    create: {
       code: 'ORD-20250101-1234',
       clientId: c.id,
       applianceType: 'Холодильник',
@@ -44,7 +46,7 @@ async function main() {
     }
   });
 
-  console.log('Seed done with sample order:', o.code);
+  console.log('Seed done with sample order: ORD-20250101-1234');
 }
 
 main().then(()=>process.exit(0)).catch(e=>{ console.error(e); process.exit(1); });
